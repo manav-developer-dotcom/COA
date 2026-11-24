@@ -4,224 +4,415 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Booth's Multiplication Algorithm</title>
+<title>Booth's Multiplication Simulator</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: white;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 8%;
-  background: #1e293b;
-  position: sticky;
-  top: 0;
-}
-
-nav h2 { color: #38bdf8; }
-
-nav a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px;
-}
-
-nav a:hover { color: #38bdf8; }
-
-.hero {
-  text-align: center;
-  padding: 100px 20px;
-  background: linear-gradient(135deg,#1e3a8a,#0f172a);
-}
-
-.hero h1 {
-  font-size: 42px;
-  margin-bottom: 20px;
-}
-
-.hero p {
-  color: #cbd5e1;
-  font-size: 18px;
-}
-
-.btn {
-  display: inline-block;
-  margin-top: 25px;
-  padding: 12px 25px;
-  background: #38bdf8;
-  color: #0f172a;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
-}
-
-section {
-  padding: 65px 10%;
-}
-
-h2 {
-  color: #38bdf8;
-  margin-bottom: 20px;
-}
-
-p {
-  line-height: 1.8;
-  color: #cbd5e1;
-}
-
-.card {
-  background: #1e293b;
-  padding: 25px;
-  margin: 15px 0;
-  border-radius: 12px;
-  border: 1px solid #334155;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th, td {
-  padding: 15px;
-  border: 1px solid #475569;
-  text-align: center;
-}
-
-th { background: #0369a1; }
-
-.flow {
-  text-align: center;
-  max-width: 550px;
-  margin: auto;
-}
-
-.step {
-  background: #1e40af;
-  padding: 17px;
-  margin: 12px auto;
-  border-radius: 8px;
-}
-
-.arrow {
-  color: #38bdf8;
-  font-size: 25px;
-}
-
-footer {
-  background: #1e293b;
-  text-align: center;
-  padding: 25px;
-  color: #94a3b8;
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Arial,sans-serif;background:#080d19;color:#e5e7eb}
+header{padding:20px 7%;background:#111b30;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
+.logo{font-size:23px;font-weight:bold;color:#60a5fa}
+nav a{color:#cbd5e1;text-decoration:none;margin:10px;font-size:14px}
+nav a:hover{color:#60a5fa}
+.hero{text-align:center;padding:75px 20px;background:linear-gradient(135deg,#111c32,#172554,#312e81)}
+.hero h1{font-size:clamp(30px,5vw,48px);margin-bottom:15px}
+.hero h1 span{color:#60a5fa}
+.hero p{color:#cbd5e1;max-width:650px;margin:auto;line-height:1.7}
+button{cursor:pointer;border:none;border-radius:7px;padding:12px 20px;font-weight:bold;margin:5px}
+.primary{background:#3b82f6;color:white}
+.secondary{background:#334155;color:white}
+.hero button{margin-top:25px}
+.container{width:90%;max-width:1100px;margin:45px auto}
+.heading{color:#60a5fa;font-size:28px;margin-bottom:20px}
+.card{background:#141f33;border:1px solid #293b58;padding:25px;border-radius:12px;margin-bottom:25px}
+.card h3{color:#93c5fd;margin-bottom:15px}
+p{line-height:1.7}
+label{display:block;margin-bottom:7px;color:#cbd5e1}
+input,select{width:100%;padding:13px;background:#080f1e;color:white;border:1px solid #405372;border-radius:6px;margin-bottom:18px}
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.rules{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.rule{padding:15px;background:#0b1528;border-left:3px solid #3b82f6;border-radius:6px}
+.rule strong{color:#60a5fa}
+.register-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.register{background:#080f1e;padding:18px 5px;text-align:center;border:1px solid #3b82f6;border-radius:8px}
+.register h3{font-size:14px;color:#60a5fa;margin-bottom:10px}
+.register p{font-size:21px;color:#4ade80;font-weight:bold;overflow-wrap:anywhere}
+.operation{padding:18px;background:#1e3a5f;border-left:4px solid #60a5fa;border-radius:6px;margin-top:15px}
+.operation p{margin-top:5px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:600px;margin-top:15px}
+th,td{padding:12px;text-align:center;border:1px solid #334155;font-size:13px}
+th{background:#1e3a5f;color:#93c5fd}
+td{background:#0b1528}
+.result{background:#064e3b;border:1px solid #10b981;text-align:center;padding:25px;border-radius:10px;margin-top:20px}
+.result h2{font-size:30px;color:#4ade80;margin:10px}
+.hidden{display:none}
+.flowchart{display:flex;flex-direction:column;align-items:center;gap:8px;padding:15px}
+.flow{width:min(90%,350px);padding:14px;background:#1e3a5f;border:1px solid #60a5fa;text-align:center;border-radius:8px}
+.terminal{width:180px;border-radius:30px;background:#065f46;border-color:#10b981}
+.decision{background:#713f12;border-color:#f59e0b}
+.arrow{font-size:23px;color:#60a5fa}
+.note{font-size:13px;color:#fbbf24}
+footer{text-align:center;padding:25px;background:#111c32;color:#94a3b8;margin-top:50px}
+@media(max-width:650px){
+header{justify-content:center}
+nav{text-align:center}
+.input-grid{grid-template-columns:1fr}
+.rules{grid-template-columns:1fr 1fr}
+.register-grid{grid-template-columns:1fr 1fr}
+.container{width:94%}
+.card{padding:17px}
 }
 </style>
 </head>
 
 <body>
 
+<header>
+<div class="logo">BoothSim.</div>
 <nav>
-  <h2>BOOTH'S ALGORITHM</h2>
-  <div>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#rules">Rules</a>
-    <a href="#flowchart">Flowchart</a>
-  </div>
+<a href="#home">Home</a>
+<a href="#about">Algorithm</a>
+<a href="#simulator">Simulator</a>
+<a href="#flowchart">Flowchart</a>
 </nav>
+</header>
 
-<div class="hero" id="home">
-  <h1>Booth's Multiplication Algorithm</h1>
-  <p>An Interactive Guide to Signed Binary Multiplication</p>
-  <a href="#about" class="btn">Explore Algorithm</a>
+<section class="hero" id="home">
+<h1>Booth's <span>Multiplication</span></h1>
+<p>An interactive simulation of Booth's multiplication algorithm for signed binary numbers using 2's complement representation.</p>
+<button class="primary" onclick="document.getElementById('simulator').scrollIntoView()">Start Simulation →</button>
+</section>
+
+<div class="container" id="about">
+<h2 class="heading">About Booth's Algorithm</h2>
+<div class="card">
+<h3>Introduction</h3>
+<p>Booth's multiplication algorithm is used in Computer Organization and Architecture to multiply signed binary numbers. It uses 2's complement representation and reduces unnecessary arithmetic operations by examining pairs of multiplier bits.</p>
+<br>
+<h3>Algorithm Rules</h3>
+<div class="rules">
+<div class="rule"><strong>00</strong><p>No operation</p></div>
+<div class="rule"><strong>01</strong><p>A = A + M</p></div>
+<div class="rule"><strong>10</strong><p>A = A - M</p></div>
+<div class="rule"><strong>11</strong><p>No operation</p></div>
+</div>
+<br>
+<p>After each operation, an arithmetic right shift is performed on the combined A, Q and Q-1 registers. This process repeats for n iterations.</p>
+</div>
 </div>
 
-<section id="about">
-  <h2>Introduction</h2>
-  <div class="card">
-    <p>
-      Booth's Multiplication Algorithm is a technique used
-      in computer architecture to multiply signed binary
-      numbers using 2's complement representation.
-      It was developed by Andrew Donald Booth in 1951.
-    </p>
-    <br>
-    <p>
-      The algorithm reduces the number of addition and
-      subtraction operations by examining pairs of bits.
-      It is particularly useful when multiplying numbers
-      containing consecutive 1s.
-    </p>
-  </div>
-</section>
+<div class="container" id="simulator">
+<h2 class="heading">Interactive Simulator</h2>
 
-<section id="rules">
-  <h2>Algorithm Rules</h2>
-  <div class="card">
-    <table>
-      <tr>
-        <th>Q0</th>
-        <th>Q-1</th>
-        <th>Operation</th>
-      </tr>
-      <tr><td>0</td><td>0</td><td>No operation</td></tr>
-      <tr><td>0</td><td>1</td><td>A = A + M</td></tr>
-      <tr><td>1</td><td>0</td><td>A = A - M</td></tr>
-      <tr><td>1</td><td>1</td><td>No operation</td></tr>
-    </table>
-    <br>
-    <p>After checking the bits, perform an arithmetic right shift.</p>
-  </div>
-</section>
+<div class="card">
+<h3>Enter Binary Numbers</h3>
+<div class="input-grid">
+<div>
+<label>Multiplicand (M)</label>
+<input id="mInput" placeholder="Example: 0101" autocomplete="off">
+</div>
+<div>
+<label>Multiplier (Q)</label>
+<input id="qInput" placeholder="Example: 0011" autocomplete="off">
+</div>
+</div>
 
-<section id="flowchart">
-  <h2>Flowchart</h2>
-  <div class="card flow">
-    <div class="step">START</div>
-    <div class="arrow">↓</div>
-    <div class="step">
-      Initialize A = 0, Q = Multiplier,<br>
-      M = Multiplicand, Q-1 = 0,<br>
-      Count = n
-    </div>
-    <div class="arrow">↓</div>
-    <div class="step">Check Q0 and Q-1</div>
-    <div class="arrow">↓</div>
-    <div class="step">
-      01 → A = A + M<br>
-      10 → A = A - M<br>
-      00 or 11 → No operation
-    </div>
-    <div class="arrow">↓</div>
-    <div class="step">Arithmetic Right Shift</div>
-    <div class="arrow">↓</div>
-    <div class="step">Count = Count - 1</div>
-    <div class="arrow">↓</div>
-    <div class="step">Is Count = 0?</div>
-    <div class="arrow">↓</div>
-    <div class="step">
-      YES → Result = A,Q → END<br><br>
-      NO → Repeat from checking Q0 and Q-1
-    </div>
-  </div>
-</section>
+<label>Bit Size</label>
+<select id="bitSize">
+<option value="4">4-bit</option>
+<option value="5">5-bit</option>
+<option value="8">8-bit</option>
+</select>
+
+<button class="primary" onclick="startSimulation()">Start Simulation</button>
+<button class="secondary" onclick="resetSimulation()">Reset</button>
+<p id="error" style="color:#f87171;margin-top:10px"></p>
+</div>
+
+<div id="simulationArea" class="hidden">
+<div class="card">
+<h3>Register Visualization</h3>
+
+<div class="register-grid">
+<div class="register"><h3>Register A</h3><p id="regA">0000</p></div>
+<div class="register"><h3>Register Q</h3><p id="regQ">0000</p></div>
+<div class="register"><h3>Register Q-1</h3><p id="regQ1">0</p></div>
+<div class="register"><h3>Register M</h3><p id="regM">0000</p></div>
+</div>
+
+<div class="operation">
+<h3 id="currentOperation">Ready</h3>
+<p id="iteration">Iteration: 0</p>
+<p id="bitPair">Q₀ Q-1: -</p>
+<p id="operationDetail"></p>
+</div>
+
+<div style="text-align:center;margin-top:20px">
+<button class="primary" id="nextBtn" onclick="nextStep()">Next Step →</button>
+<button class="secondary" onclick="resetSimulation()">Restart</button>
+</div>
+</div>
+
+<div class="card">
+<h3>Iteration History</h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Step</th><th>Q₀ Q-1</th><th>Operation</th><th>A</th><th>Q</th><th>Q-1</th>
+</tr>
+</thead>
+<tbody id="history"></tbody>
+</table>
+</div>
+</div>
+
+<div class="result hidden" id="finalResult">
+<h3>Multiplication Completed!</h3>
+<h2 id="binaryResult"></h2>
+<p id="decimalResult"></p>
+</div>
+</div>
+</div>
+
+<div class="container" id="flowchart">
+<h2 class="heading">Booth's Algorithm Flowchart</h2>
+<div class="card">
+<div class="flowchart">
+<div class="flow terminal">START</div>
+<div class="arrow">↓</div>
+<div class="flow">Input Multiplicand M and Multiplier Q</div>
+<div class="arrow">↓</div>
+<div class="flow">Initialize A = 0, Q-1 = 0, Count = n</div>
+<div class="arrow">↓</div>
+<div class="flow">Examine Q₀ and Q-1</div>
+<div class="arrow">↓</div>
+<div class="flow decision">Check the bit pair</div>
+<div class="flow">01 → A = A + M<br>10 → A = A - M<br>00 or 11 → No operation</div>
+<div class="arrow">↓</div>
+<div class="flow">Perform Arithmetic Right Shift on A, Q and Q-1</div>
+<div class="arrow">↓</div>
+<div class="flow">Count = Count - 1</div>
+<div class="arrow">↓</div>
+<div class="flow decision">Is Count = 0?</div>
+<div class="note">NO → Repeat the bit-pair examination</div>
+<div class="arrow">↓ YES</div>
+<div class="flow">Final Product = A concatenated with Q</div>
+<div class="arrow">↓</div>
+<div class="flow terminal">END</div>
+</div>
+</div>
+</div>
+
+<div class="container">
+<div class="card">
+<h3>Advantages of Booth's Algorithm</h3>
+<p>• Supports signed binary multiplication.</p>
+<p>• Uses 2's complement representation.</p>
+<p>• Reduces unnecessary addition operations.</p>
+<p>• Useful in arithmetic logic units.</p>
+<p>• Efficient when the multiplier contains consecutive 1s.</p>
+</div>
+</div>
 
 <footer>
-  <p>COA Project | Booth's Multiplication Algorithm</p>
-  <p>Computer Organization and Architecture</p>
+<p>Booth's Multiplication Simulator | COA Mini Project</p>
+<p>Computer Organization and Architecture</p>
 </footer>
 
+<script>
+let state=null;
+let steps=[];
+let currentStep=0;
+
+function toBits(value,n){
+const mask=(1n<<BigInt(n))-1n;
+return (value&mask).toString(2).padStart(n,"0");
+}
+
+function signedValue(value,n){
+const sign=1n<<BigInt(n-1);
+const modulus=1n<<BigInt(n);
+return value>=sign?value-modulus:value;
+}
+
+function startSimulation(){
+
+const mText=document.getElementById("mInput").value.trim();
+const qText=document.getElementById("qInput").value.trim();
+const n=Number(document.getElementById("bitSize").value);
+const error=document.getElementById("error");
+
+error.textContent="";
+
+if(!/^[01]+$/.test(mText)||!/^[01]+$/.test(qText)){
+error.textContent="Enter valid binary numbers containing only 0 and 1.";
+return;
+}
+
+if(mText.length!==n||qText.length!==n){
+error.textContent="Both numbers must contain exactly "+n+" bits.";
+return;
+}
+
+const M=BigInt("0b"+mText);
+const Q=BigInt("0b"+qText);
+const mSigned=signedValue(M,n);
+const qSigned=signedValue(Q,n);
+
+const min=-(1n<<BigInt(n-1));
+const max=(1n<<BigInt(n-1))-1n;
+
+if(mSigned<min||mSigned>max||qSigned<min||qSigned>max){
+error.textContent="Numbers are outside the signed range.";
+return;
+}
+
+const mask=(1n<<BigInt(n))-1n;
+
+state={n,M,A:0n,Q,Q1:0n};
+
+steps=[{
+iteration:0,pair:"-",operation:"Initialize",
+A:0n,Q,Q1:0n
+}];
+
+for(let i=1;i<=n;i++){
+
+const pair=Number((state.Q&1n)*2n+state.Q1);
+let operation="No operation";
+
+if(pair===1){
+state.A=(state.A+state.M)&mask;
+operation="A = A + M";
+}
+else if(pair===2){
+state.A=(state.A-state.M)&mask;
+operation="A = A - M";
+}
+
+const totalBits=2*n+1;
+const totalMask=(1n<<BigInt(totalBits))-1n;
+
+let combined=(state.A<<BigInt(n+1))|
+(state.Q<<1n)|state.Q1;
+
+const signBit=1n<<BigInt(totalBits-1);
+
+if((combined&signBit)!==0n){
+combined-=1n<<BigInt(totalBits);
+}
+
+combined>>=1n;
+combined&=totalMask;
+
+state.Q1=combined&1n;
+state.Q=(combined>>1n)&mask;
+state.A=(combined>>BigInt(n+1))&mask;
+
+steps.push({
+iteration:i,
+pair:pair.toString(2).padStart(2,"0"),
+operation:operation+" + Arithmetic Right Shift",
+A:state.A,
+Q:state.Q,
+Q1:state.Q1
+});
+}
+
+currentStep=0;
+document.getElementById("simulationArea").classList.remove("hidden");
+document.getElementById("finalResult").classList.add("hidden");
+
+const history=document.getElementById("history");
+history.innerHTML="";
+
+steps.forEach(step=>{
+const row=document.createElement("tr");
+
+[
+step.iteration,
+step.pair,
+step.operation,
+toBits(step.A,n),
+toBits(step.Q,n),
+step.Q1.toString()
+].forEach(value=>{
+const cell=document.createElement("td");
+cell.textContent=value;
+row.appendChild(cell);
+});
+
+history.appendChild(row);
+});
+
+showStep();
+document.getElementById("simulationArea").scrollIntoView({behavior:"smooth"});
+}
+
+function showStep(){
+
+const step=steps[currentStep];
+const n=state.n;
+
+document.getElementById("regA").textContent=toBits(step.A,n);
+document.getElementById("regQ").textContent=toBits(step.Q,n);
+document.getElementById("regQ1").textContent=step.Q1;
+document.getElementById("regM").textContent=toBits(state.M,n);
+
+document.getElementById("currentOperation").textContent=step.operation;
+document.getElementById("iteration").textContent="Iteration: "+step.iteration+" / "+n;
+document.getElementById("bitPair").textContent="Q₀ Q-1: "+step.pair;
+
+document.getElementById("operationDetail").textContent=
+step.iteration===0?"Initial register values.":"Operation and arithmetic right shift completed.";
+
+const done=currentStep===steps.length-1;
+
+document.getElementById("nextBtn").disabled=done;
+document.getElementById("nextBtn").textContent=
+done?"Simulation Completed":"Next Step →";
+
+if(done)showResult();
+else document.getElementById("finalResult").classList.add("hidden");
+}
+
+function nextStep(){
+if(currentStep<steps.length-1){
+currentStep++;
+showStep();
+}
+}
+
+function showResult(){
+
+const n=state.n;
+const product=(state.A<<BigInt(n))|state.Q;
+const bits=toBits(product,2*n);
+const decimal=signedValue(product,2*n);
+
+document.getElementById("binaryResult").textContent=bits;
+document.getElementById("decimalResult").textContent=
+"Decimal Result: "+decimal.toString();
+
+document.getElementById("finalResult").classList.remove("hidden");
+}
+
+function resetSimulation(){
+
+state=null;
+steps=[];
+currentStep=0;
+
+document.getElementById("simulationArea").classList.add("hidden");
+document.getElementById("finalResult").classList.add("hidden");
+document.getElementById("history").innerHTML="";
+document.getElementById("error").textContent="";
+document.getElementById("mInput").value="";
+document.getElementById("qInput").value="";
+}
+
+</script>
 </body>
 </html>
