@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booth's Multiplication Algorithm</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 8%;
+  background: #1e293b;
+  position: sticky;
+  top: 0;
+}
+
+nav h2 { color: #38bdf8; }
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+nav a:hover { color: #38bdf8; }
+
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+  background: linear-gradient(135deg,#1e3a8a,#0f172a);
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  color: #cbd5e1;
+  font-size: 18px;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 25px;
+  background: #38bdf8;
+  color: #0f172a;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+section {
+  padding: 65px 10%;
+}
+
+h2 {
+  color: #38bdf8;
+  margin-bottom: 20px;
+}
+
+p {
+  line-height: 1.8;
+  color: #cbd5e1;
+}
+
+.card {
+  background: #1e293b;
+  padding: 25px;
+  margin: 15px 0;
+  border-radius: 12px;
+  border: 1px solid #334155;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 15px;
+  border: 1px solid #475569;
+  text-align: center;
+}
+
+th { background: #0369a1; }
+
+.flow {
+  text-align: center;
+  max-width: 550px;
+  margin: auto;
+}
+
+.step {
+  background: #1e40af;
+  padding: 17px;
+  margin: 12px auto;
+  border-radius: 8px;
+}
+
+.arrow {
+  color: #38bdf8;
+  font-size: 25px;
+}
+
+footer {
+  background: #1e293b;
+  text-align: center;
+  padding: 25px;
+  color: #94a3b8;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <h2>BOOTH'S ALGORITHM</h2>
+  <div>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#rules">Rules</a>
+    <a href="#flowchart">Flowchart</a>
+  </div>
+</nav>
+
+<div class="hero" id="home">
+  <h1>Booth's Multiplication Algorithm</h1>
+  <p>An Interactive Guide to Signed Binary Multiplication</p>
+  <a href="#about" class="btn">Explore Algorithm</a>
+</div>
+
+<section id="about">
+  <h2>Introduction</h2>
+  <div class="card">
+    <p>
+      Booth's Multiplication Algorithm is a technique used
+      in computer architecture to multiply signed binary
+      numbers using 2's complement representation.
+      It was developed by Andrew Donald Booth in 1951.
+    </p>
+    <br>
+    <p>
+      The algorithm reduces the number of addition and
+      subtraction operations by examining pairs of bits.
+      It is particularly useful when multiplying numbers
+      containing consecutive 1s.
+    </p>
+  </div>
+</section>
+
+<section id="rules">
+  <h2>Algorithm Rules</h2>
+  <div class="card">
+    <table>
+      <tr>
+        <th>Q0</th>
+        <th>Q-1</th>
+        <th>Operation</th>
+      </tr>
+      <tr><td>0</td><td>0</td><td>No operation</td></tr>
+      <tr><td>0</td><td>1</td><td>A = A + M</td></tr>
+      <tr><td>1</td><td>0</td><td>A = A - M</td></tr>
+      <tr><td>1</td><td>1</td><td>No operation</td></tr>
+    </table>
+    <br>
+    <p>After checking the bits, perform an arithmetic right shift.</p>
+  </div>
+</section>
+
+<section id="flowchart">
+  <h2>Flowchart</h2>
+  <div class="card flow">
+    <div class="step">START</div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      Initialize A = 0, Q = Multiplier,<br>
+      M = Multiplicand, Q-1 = 0,<br>
+      Count = n
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">Check Q0 and Q-1</div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      01 → A = A + M<br>
+      10 → A = A - M<br>
+      00 or 11 → No operation
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step">Arithmetic Right Shift</div>
+    <div class="arrow">↓</div>
+    <div class="step">Count = Count - 1</div>
+    <div class="arrow">↓</div>
+    <div class="step">Is Count = 0?</div>
+    <div class="arrow">↓</div>
+    <div class="step">
+      YES → Result = A,Q → END<br><br>
+      NO → Repeat from checking Q0 and Q-1
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>COA Project | Booth's Multiplication Algorithm</p>
+  <p>Computer Organization and Architecture</p>
+</footer>
+
+</body>
+</html>
